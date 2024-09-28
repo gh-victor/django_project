@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block headertitle %}
+支出項目新規登録
+{% endblock %}
+
+{% block content %}
+<h2>支出項目新規登録</h2>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+    <button type="submit">登録</button>
+    <button onclick="location.href='{% url 'kakeibo:expenditure_category_index' %}'">戻る</button>
+</form>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block headertitle %}
+収入一覧
+{% endblock %}
+
+{% block content %}
+{% load humanize %}
+<h3><a href="{% url 'kakeibo:income_index' %}">収入一覧</a></h3>
+
+<table class="table_border">
+  <thead>
+    <tr>
+      <th class="table_border text-center p-1">カテゴリー</th>
+      <th class="table_border text-center p-1">日付</th>
+      <th class="table_border text-center p-1">金額</th>
+      <th class="table_border text-center p-1">備考</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for income in income_list %}
+    <tr>
+      <td class="table_border text-center">{{ income.category }}</td>
+      <td class="table_border text-center">{{ income.date }}</a></td>
+      <td class="table_border text-end">{{ income.price | intcomma }}</td>
+      <td class="table_border text-center">{{ income.description }}</td>
+      <td class="table_border"><a href="{% url 'kakeibo:income_delete' income.pk %}">削除</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a href="{% url 'kakeibo:income_export' %}">収入一覧ダウンロード</a>
+{% endblock %}

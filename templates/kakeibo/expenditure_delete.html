@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block headertitle %}
+支出削除
+{% endblock %}
+
+{% block content %}
+<h1>支出削除</h1>
+<h2>削除しますか？</h2>
+<ul>
+    <li>カテゴリー：{{ expenditure.category }}</li>
+    <li>日付：{{ expenditure.date }}</li>
+    <li>金額：{{ expenditure.price }}</li>
+    <li>備考：{{ expenditure.description }}</li>
+</ul>
+<div class="d-flex flex-row mb-3">
+    <div class="p-2">
+        <form method="POST">
+        {% csrf_token %}
+            <button tytde="submit" class="btn btn-danger">削除</button>
+        </form>
+    </div>
+    <div class="p-2">
+        <button onclick="location.href='{% url 'kakeibo:expenditure_index' %}'" class="btn btn-primary">戻る</button>
+    </div>
+</div>
+{% endblock %}
