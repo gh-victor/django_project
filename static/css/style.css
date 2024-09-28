@@ -11,6 +11,10 @@ table, th, td {
     border: 1px solid;
 }
 
+.borderless {
+    border: none;
+}
+
 tr:nth-child(even) {
     background-color: #E5E5E5;
 }

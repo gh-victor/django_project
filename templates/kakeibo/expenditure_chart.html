@@ -10,14 +10,14 @@
 
 <form class="mt-2" id="search-form" action="" method="GET">
   {% csrf_token %}
-  <table>
+  <table class="borderless">
     <tr>
-      <td>
+      <td class="borderless">
         <label class="me-2">年月</label>
         {{ form.year }}
         {{ form.month }}
       </td>
-      <td>
+      <td class="borderless">
         <button class="ml-4" type="submit">表示</button>
       </td>
     </tr>
