@@ -28,6 +28,4 @@ urlpatterns = [
     path('income/<int:pk>/delete/', views.IncomeDeleteView.as_view(), name='income_delete'), 
     path('income/import/', views.IncomeImportView.as_view(), name='income_import'),
     path('income/export/', views.IncomeExportView, name='income_export'),
-
-    path('contact/', views.ContactView.as_view(), name='contact'),
 ]
