@@ -46,7 +46,7 @@ class ExpenditureCategoryDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 # ↓↓↓ --------------------　Expenditure　-------------------- ↓↓↓
 
-def queryset_filter1(category, year, month, key_word):
+def queryset_filter1(year, month, *, category=None, key_word=None):
     queryset = Expenditure.objects.all().order_by('date')
 
     if category:
@@ -65,19 +65,8 @@ def queryset_filter1(category, year, month, key_word):
 
     return queryset
 
-
-def queryset_filter2(year, month):
-    queryset = Expenditure.objects.all().order_by('pk')
-
-    if year and year != '0':
-        queryset = queryset.filter(date__year=year)
-
-    if month and month != '0':
-        queryset = queryset.filter(date__month=month)
-
-    return queryset
-
 paginate_number = 10
+
 
 class ExpenditureIndexView(LoginRequiredMixin, generic.FormView):
     template_name = 'kakeibo/expenditure_index.html'
@@ -90,7 +79,7 @@ class ExpenditureIndexView(LoginRequiredMixin, generic.FormView):
         month = form.cleaned_data.get('month')
         key_word = form.cleaned_data.get('key_word')
         
-        queryset = queryset_filter1(category, year, month, key_word)
+        queryset = queryset_filter1(year, month, category=category, key_word=key_word)
 
         if 'search' in self.request.POST:
             context = super().get_context_data()
@@ -131,7 +120,7 @@ class ExpenditureIndexView(LoginRequiredMixin, generic.FormView):
         year = self.request.GET.get('year')
         month = self.request.GET.get('month')
         key_word = self.request.GET.get('key_word')
-        queryset = queryset_filter1(category, year, month, key_word)
+        queryset = queryset_filter1(year, month, category=category, key_word=key_word)
 
         paginated_by = paginate_number
         my_paginator = paginator.Paginator(queryset, paginated_by)
@@ -162,11 +151,9 @@ class ExpenditureChartView(generic.ListView):
         self.form = form = ExpenditureSearchForm(self.request.GET or None)
 
         if form.is_valid():
-            category = form.cleaned_data.get('category')
             year = form.cleaned_data.get('year')
             month = form.cleaned_data.get('month')
-            key_word = form.cleaned_data.get('key_word')
-            queryset = queryset_filter1(category, year, month, key_word)
+            queryset = queryset_filter1(year, month)
 
         return queryset
     
