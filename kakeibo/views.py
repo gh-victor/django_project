@@ -9,7 +9,7 @@ from .forms import CsvUploadForm
 from . import function
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django_pandas.io import read_frame
 from django.core import paginator
 from django.contrib import messages
@@ -101,9 +101,8 @@ class ExpenditureIndexView(LoginRequiredMixin, generic.FormView):
             if '&' in self.request.POST.urlencode():
                 filter_word = self.request.POST.urlencode()
                 filter_word = filter_word[filter_word.index('&'):]
-                context['filter_word'] = filter_word
 
-            return render(self.request, 'kakeibo/expenditure_index.html', context)
+            return redirect(reverse('kakeibo:expenditure_index') + '?' + filter_word)
         
         elif 'export' in self.request.POST:
             response = HttpResponse(content_type='text/csv; charset=Shift-JIS')
