@@ -102,7 +102,7 @@ class ExpenditureIndexView(LoginRequiredMixin, generic.FormView):
                 filter_word = self.request.POST.urlencode()
                 filter_word = filter_word[filter_word.index('&'):]
 
-            return redirect(reverse('kakeibo:expenditure_index') + '?' + filter_word)
+            return redirect(reverse('kakeibo:expenditure_index') + '?page=1' + filter_word)
         
         elif 'export' in self.request.POST:
             response = HttpResponse(content_type='text/csv; charset=Shift-JIS')
