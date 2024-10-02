@@ -5,7 +5,7 @@ from django.views import generic
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from .models import ExpenditureCategory, Expenditure, IncomeCategory, Income
 from .forms import ExpenditureCategoryForm, ExpenditureSearchForm, ExpenditureForm, IncomeCategoryForm, IncomeForm
-from .forms import CsvUploadForm
+from .forms import CsvUploadForm, ContactForm
 from . import function
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -13,6 +13,7 @@ from django.urls import reverse_lazy, reverse
 from django_pandas.io import read_frame
 from django.core import paginator
 from django.contrib import messages
+from urllib.parse import urlencode
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -78,15 +79,16 @@ class ExpenditureIndexView(LoginRequiredMixin, generic.FormView):
         year = form.cleaned_data.get('year')
         month = form.cleaned_data.get('month')
         key_word = form.cleaned_data.get('key_word')
-        
+
         queryset = queryset_filter1(year, month, category=category, key_word=key_word)
 
         if 'search' in self.request.POST:
-            if '&' in self.request.POST.urlencode():
-                filter_word = self.request.POST.urlencode()
-                filter_word = filter_word[filter_word.index('&'):]
+            if category:
+                filter_word = urlencode({'category': category.pk, 'year': year, 'month': month, 'key_word': key_word})
+            else:
+                filter_word = urlencode({'year': year, 'month': month, 'key_word': key_word})
 
-            return redirect(reverse('kakeibo:expenditure_index') + '?page=1' + filter_word)
+            return redirect(reverse('kakeibo:expenditure_index') + '?page=1&' + filter_word)
         
         elif 'export' in self.request.POST:
             response = HttpResponse(content_type='text/csv; charset=Shift-JIS')
