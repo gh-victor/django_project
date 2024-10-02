@@ -82,22 +82,6 @@ class ExpenditureIndexView(LoginRequiredMixin, generic.FormView):
         queryset = queryset_filter1(year, month, category=category, key_word=key_word)
 
         if 'search' in self.request.POST:
-            context = super().get_context_data()
-            context['expenditure_list'] = queryset
-
-            object_list = queryset
-            paginated_by = paginate_number
-            my_paginator = paginator.Paginator(object_list, paginated_by)
-
-            page = 1
-            try:
-                page_obj = my_paginator.page(page)
-            except (paginator.PageNotAnInteger, paginator.EmptyPage):
-                page_obj = my_paginator.page(1)
-
-            context['page_obj'] = page_obj
-            context['expenditure_list'] = page_obj.object_list
-
             if '&' in self.request.POST.urlencode():
                 filter_word = self.request.POST.urlencode()
                 filter_word = filter_word[filter_word.index('&'):]
