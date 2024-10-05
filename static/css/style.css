@@ -16,7 +16,11 @@ table, th, td {
 }
 
 tr:nth-child(even) {
-    background-color: #E5E5E5;
+    background-color: #DDDDDD;
+}
+
+tr:hover {
+    background-color: lightblue;
 }
 
 td {
