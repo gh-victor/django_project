@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>{% block headertitle %}{% endblock %}</title>
+    {% include 'css.html' %}
+  </head>
+  <body>
+    <div class="container-nav">
+      {% include 'nav.html' %}
+    </div>
+    <div class="container-body">
+      <div class="container-main">
+        <main>
+          {% if messages %}
+            <div>
+              <ul>
+                  {% for message in messages %}
+                    <li class="base_message">{{ message | linebreaksbr }}</li>
+                  {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+          {% block content %}{% endblock %}
+        </div>
+      </main>
+    </div>
+    {% include 'js.html' %}
+  </body>
+</html>

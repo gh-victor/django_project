@@ -1,0 +1,63 @@
+.container-nav {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.container-body {
+    max-width: 100%;
+    margin: 60px auto 10px;
+    padding: 0 3px;
+    overflow: auto;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.list tr:nth-child(even) {
+    background-color: #DDDDDD;
+}
+
+.list tr:hover {
+    background-color: lightblue;
+}
+
+.list th, .list td {
+    border: 1px solid;
+}
+
+td {
+    padding: 0.5rem;
+}
+
+td > * {
+    vertical-align: middle;
+}
+
+.list td {
+    white-space: nowrap;
+}
+
+ul {
+    padding-left: 0;
+}
+
+li {
+    list-style: none;
+}
+
+.search_word {
+    width: 400px;
+    max-width: 60%;
+}
+
+.base_message {
+    font-size: 20px;
+    color: green;
+}
+
+.chart_ul {
+    display: flex;
+}

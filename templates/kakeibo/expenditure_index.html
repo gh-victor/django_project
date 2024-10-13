@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block headertitle %}
+支出一覧
+{% endblock %}
+
+{% block content %}
+{% load humanize %}
+<h3><a href="{% url 'kakeibo:expenditure_index' %}">支出一覧</a></h3>
+
+<form class="mt-2 mb-3" id="search-form" action="" method="POST">
+  {% csrf_token %}
+  <div>
+    <label class="mt-2 me-2">カテゴリー</label>
+    {{ form.category }}
+  </div>
+  <div>
+    <label class="mt-2 me-2">年月</label>
+    {{ form.year }}
+    {{ form.month }}
+  </div>
+  <div>
+    <label class="mt-2 me-2">備考</label>
+    <input class="search_word" type="text" name="key_word" value="{{ request.POST.key_word }}" placeholder="スペース区切りで複数のキーワード入力可（AND検索）">
+  </div>
+  <div class="mt-2">
+    <button name="search" class="ml-4" type="submit">検索</button>
+    <button name="export" class="ml-4" type="submit">ダウンロード</button>
+  </div>
+</form>
+
+<div class="list">
+  <table>
+    <thead>
+      <tr>
+        <th>カテゴリー</th>
+        <th>日付</th>
+        <th>金額</th>
+        <th>備考</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for expenditure in expenditure_list %}
+      <tr>
+        <td class="text-center">{{ expenditure.category }}</td>
+        <td class="text-center">{{ expenditure.date }}</a></td>
+        <td class="text-end">{{ expenditure.price | intcomma }}</td>
+        <td class="text-center">{{ expenditure.description }}</td>
+        <td><a href="{% url 'kakeibo:expenditure_update' expenditure.pk %}">編集</a></td>
+        <td><a href="{% url 'kakeibo:expenditure_delete' expenditure.pk %}">削除</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% include 'kakeibo/kakeibo_pagenation.html' %}
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block headertitle %}
+収入削除
+{% endblock %}
+
+{% block content %}
+<h1>収入削除</h1>
+<h2>削除しますか？</h2>
+<ul>
+    <li>カテゴリー：{{ income.category }}</li>
+    <li>日付：{{ income.date }}</li>
+    <li>金額：{{ income.price }}</li>
+    <li>備考：{{ income.description }}</li>
+</ul>
+<div class="d-flex flex-row mb-3">
+    <div class="p-2">
+        <form method="POST">
+        {% csrf_token %}
+            <button tytde="submit" class="btn btn-danger">削除</button>
+        </form>
+    </div>
+    <div class="p-2">
+        <button onclick="location.href='{% url 'kakeibo:income_index' %}'" class="btn btn-primary">戻る</button>
+    </div>
+</div>
+{% endblock %}

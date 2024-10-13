@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block headertitle %}
+支出項目一覧
+{% endblock %}
+
+{% block content %}
+{% load humanize %}
+<h3><a href="{% url 'kakeibo:expenditure_category_index' %}">支出項目一覧</a></h3>
+
+<div class="list">
+  <table>
+    <thead>
+      <tr>
+        <th>ナンバー</th>
+        <th>項目名</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for expenditure in expenditurecategory_list %}
+      <tr>
+        <td class="text-end">{{ expenditure.number }}</td>
+        <td class="text-center">{{ expenditure.name }}</a></td>
+        <td><a href="{% url 'kakeibo:expenditure_category_update' expenditure.pk %}">編集</a></td>
+        <td><a href="{% url 'kakeibo:expenditure_category_delete' expenditure.pk %}">削除</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% include 'kakeibo/kakeibo_pagenation.html' %}
+{% endblock %}

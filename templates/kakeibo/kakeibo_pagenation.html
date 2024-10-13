@@ -1,0 +1,16 @@
+{% load extra_tags %}
+<div>
+{% if page_obj.has_previous %}
+  <a href="?page=1{{ filter_word }}">1</a>
+  <a href="?page={{ page_obj.previous_page_number }}{{ filter_word }}">前へ</a>
+{% endif %}
+
+{% if page_obj %}
+  Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+{% endif %}
+
+{% if page_obj.has_next %}
+  <a href="?page={{ page_obj.next_page_number }}{{ filter_word }}">次へ</a>
+  <a href="?page={{ page_obj.paginator.num_pages }}{{ filter_word }}">{{ page_obj.paginator.num_pages }}</a>
+{% endif %}
+</div>

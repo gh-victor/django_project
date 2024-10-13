@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block headertitle %}
+収支グラフ
+{% endblock %}
+
+{% block content %}
+{% load humanize %}
+<h3><a href="{% url 'kakeibo:expenditure_chart' %}">収支グラフ</a></h3>
+
+<form class="mt-2 mb-1" id="search-form" action="" method="GET">
+  {% csrf_token %}
+  <table>
+    <tr>
+      <td>
+        <label class="me-2">年月</label>
+        {{ form.year }}
+        {{ form.month }}
+      </td>
+      <td>
+        <button class="ml-4" type="submit">表示</button>
+      </td>
+    </tr>
+  </table>
+</form>
+
+<ul class="chart_ul">
+  <li>
+    <div class="list">
+      <table>
+        {% for row in totals_for_each_category %}
+          <tr>
+            <td class="text-center">{{ row.0 }}</td>
+            <td class="text-end">{{ row.1 | intcomma }}</td>
+            <td class="text-end">{{ row.2 }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </li>
+  <li class="ms-5">
+    <div class="list">
+      <table>
+        <tr>
+          <td class="text-center">総収入額</td>
+          <td class="text-end">{{ total_income_price | intcomma }}</td>
+        </tr>
+        <tr>
+          <td class="text-center">総支出額</td>
+          <td class="text-end">{{ total_expenditure_price | intcomma }}</td>
+        </tr>
+        <tr>
+          <td class="text-center">総収支額</td>
+          <td class="text-end">{{ total_income_and_expenditure_price | intcomma }}</td>
+        </tr>
+      </table>
+    </div>
+  </li>
+</ul>
+
+<ul class="chart_ul">
+  <li><img class="img-fluid" src="data:image/png;base64,{{ chart1 | safe }}" onerror="this.style.display='none'"></li>
+  <li><img class="img-fluid" src="data:image/png;base64,{{ chart2 | safe }}" onerror="this.style.display='none'"></li>
+</ul>
+ {% endblock %}
